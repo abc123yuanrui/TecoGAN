@@ -60,7 +60,7 @@ def loadHR_batch(FLAGS, tar_size):
             raise ValueError('Video input directory not found')
             
         image_set_lists = []
-        with tf.variable_scope('load_frame'):
+        with tf.compat.v1.variable_scope('load_frame'):
             for dir_i in range(FLAGS.str_dir, FLAGS.end_dir+1):
                 inputDir = os.path.join( FLAGS.input_video_dir, '%s_%04d' %(FLAGS.input_video_pre, dir_i) )
                 if (os.path.exists(inputDir)): # the following names are hard coded: col_high_
@@ -196,7 +196,7 @@ def loadHR(FLAGS, tar_size):
                     
         image_list_HR_r = [tf.convert_to_tensor(_ , dtype=tf.string) for _ in image_list_HR_r ]
 
-        with tf.variable_scope('load_frame'):
+        with tf.compat.v1.variable_scope('load_frame'):
             # define the image list queue
             output = tf.train.slice_input_producer(image_list_HR_r, shuffle=False,\
                 capacity=int(FLAGS.name_video_queue_capacity) )
@@ -251,7 +251,7 @@ def loadHR(FLAGS, tar_size):
                 else:
                     raise Exception('Not implemented')
             
-            with tf.variable_scope('random_flip'):
+            with tf.compat.v1.variable_scope('random_flip'):
                 # Check for random flip:
                 if (FLAGS.flip is True) and (FLAGS.mode == 'train'):
                     print('[Config] Use random flip')
